@@ -7,6 +7,9 @@ large_range = 80000  # Meters
 
 earth_radius = 6378000  # Meters
 
-detection_lambda = 3
-detection_radius = 56.5
-min_time_in_range = 40
+detection_lambda = 3  # 1/Seconds
+detection_radius = 56.5 * 1000  # Meters
+min_time_in_range = 40  # Seconds
+
+sim_step = 0.1  # Seconds
+karrar_speed = 900 / 3.6  # Meters/Seconds

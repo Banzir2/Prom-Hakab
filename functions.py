@@ -9,7 +9,7 @@ import mvp_functions
 
 def theta(r_balloon: np.array, r_object: np.array) -> bool:
     diff = r_balloon - r_object
-    dist = math.sqrt(sum([x**2 for x in diff]))
+    dist = vec_length(diff)
     if dist < constants.detection_radius:
         return True
     return False
@@ -34,9 +34,19 @@ def prob_detect(balloons: list[np.array], path: list[tuple[np.array, float]]) ->
     return 1 - prob_no_detect
 
 
-def gps2ecef_pyproj(lat, lon, alt) -> np.array:
+def gps2ecef_pyproj(lon, lat, alt) -> np.array:
     ecef = pj.Proj(proj='geocent', ellps='WGS84', datum='WGS84')
     lla = pj.Proj(proj='latlong', ellps='WGS84', datum='WGS84')
     x, y, z = pj.transform(lla, ecef, lon, lat, alt, radians=False)
     return np.array([x, y, z])
 
+
+def ecef2gps_pyproj(r: list[float]) -> list[float]:
+    ecef = pj.Proj(proj='geocent', ellps='WGS84', datum='WGS84')
+    lla = pj.Proj(proj='latlong', ellps='WGS84', datum='WGS84')
+    lon, lat, alt = pj.transform(ecef, lla, r[0], r[1], r[2], radians=False)
+    return [lon, lat, alt]
+
+
+def vec_length(vec: np.array) -> float:
+    return math.sqrt(sum([x**2 for x in vec]))
