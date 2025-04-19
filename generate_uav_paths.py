@@ -17,10 +17,11 @@ if __name__ == '__main__':
         az_vector = (diff / functions.vec_length(diff)) * step_dist
         p = p1
         for j in range(int(math.floor(functions.vec_length(diff) / step_dist))):
-            path.append(functions.gps2ecef_pyproj(p[0], p[1], p[2]).tolist())
+            l = functions.gps2ecef_pyproj(p[1], p[0], p[2]).tolist()
+            l.append(j * constants.sim_step)
+            path.append(l)
             p = p + az_vector
     with open('paths/path1.csv', 'w', newline='') as pathfile:
         wr = csv.writer(pathfile, quoting=csv.QUOTE_NONE)
+        wr.writerow(['x', 'y', 'z', 't'])
         wr.writerows(path)
-
-

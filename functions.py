@@ -9,7 +9,7 @@ import mvp_functions
 
 def theta(r_balloon: np.array, r_object: np.array) -> bool:
     diff = r_balloon - r_object
-    dist = vec_length(diff)
+    dist = vec_length(diff[0:-1])
     if dist < constants.detection_radius:
         return True
     return False
@@ -22,7 +22,7 @@ def prob_detect(balloons: list[np.array], path: list[tuple[np.array, float]]) ->
         time_in_range = 0
         for i in range(len(path) - 1):
             if theta(b, path[i][0]):
-                time_in_range += path[i + 1][1] - path[i + 1][0]
+                time_in_range += path[i + 1][1] - path[i][1]
             else:
                 if time_in_range > constants.min_time_in_range:
                     times.append(time_in_range)
