@@ -31,7 +31,7 @@ def prob_detect(balloons: list[np.array], path: list[tuple[np.array, float]]) ->
             times.append(time_in_range)
     for t in times:
         prob_no_detect *= (1 - mvp_functions.detection_probability_cu(t))
-        print(100 * (1 - mvp_functions.detection_probability_cu(t)))
+        print("UAV in range, detection probability:", 100 * mvp_functions.detection_probability_cu(t))
     return 1 - prob_no_detect
 
 
