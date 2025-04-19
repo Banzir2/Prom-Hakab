@@ -17,8 +17,8 @@ def theta(r_balloon: np.array, r_object: np.array) -> bool:
 
 def prob_detect(balloons: list[np.array], path: list[tuple[np.array, float]]) -> float:
     prob_no_detect = 1
+    times = []
     for b in balloons:
-        times = []
         time_in_range = 0
         for i in range(len(path) - 1):
             if theta(b, path[i][0]):
@@ -29,8 +29,9 @@ def prob_detect(balloons: list[np.array], path: list[tuple[np.array, float]]) ->
                 time_in_range = 0
         if time_in_range > constants.min_time_in_range:
             times.append(time_in_range)
-        for t in times:
-            prob_no_detect *= (1 - mvp_functions.detection_probability_cu(t))
+    for t in times:
+        prob_no_detect *= (1 - mvp_functions.detection_probability_cu(t))
+        print(100 * (1 - mvp_functions.detection_probability_cu(t)))
     return 1 - prob_no_detect
 
 
