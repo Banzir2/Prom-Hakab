@@ -40,7 +40,7 @@ if __name__ == '__main__':
             ax.set_zlabel('Z Label')
 
             points = [tuple([np.array(data[j][0:-1]), data[j][len(data[j])-1]]) for j in range(len(data))]
-            print("Balloon array detected UAV, probability: ", 100 * functions.prob_detect(ecef_coords, points))
+            print("Balloon array detected UAV, probability: ", 100 * functions.prob_detect(ecef_coords, points), '\n')
 
     df = pd.read_csv("configurations/balloons1.csv")
     token = "pk.eyJ1IjoiYXRoYXJ2YWthdHJlIiwiYSI6ImNrZ2dkNHQ5MzB2bDUyc2tmZWc2dGx1eXQifQ.lVdNfajC6maADBHqsVrpcg"
