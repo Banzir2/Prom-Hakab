@@ -19,7 +19,7 @@ if __name__ == '__main__':
         for j in range(int(math.floor(functions.vec_length(diff) / step_dist))):
             path.append(functions.gps2ecef_pyproj(p[0], p[1], p[2]).tolist())
             p = p + az_vector
-    with open('paths/path.csv', 'w', newline='') as pathfile:
+    with open('paths/path1.csv', 'w', newline='') as pathfile:
         wr = csv.writer(pathfile, quoting=csv.QUOTE_NONE)
         wr.writerows(path)
 
