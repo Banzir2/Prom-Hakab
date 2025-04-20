@@ -1,5 +1,6 @@
-import constants as c
 import math
+
+import constants as c
 
 
 def detection_probability_cu(time: float) -> float:
