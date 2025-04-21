@@ -13,7 +13,7 @@ import warnings
 
 if __name__ == '__main__':
     warnings.filterwarnings("ignore")
-    df = pd.read_csv("configurations/balloons1.csv")
+    df = pd.read_csv("configurations/balloons12.csv")
 
     gps_coords = df.values
     ecef_coords = []
@@ -49,7 +49,7 @@ if __name__ == '__main__':
     ax.set_aspect('equal')
     ax.scatter(x, y)
 
-    df = pd.read_csv("configurations/balloons1.csv")
+    df = pd.read_csv("configurations/balloons12.csv")
     token = "pk.eyJ1IjoiYXRoYXJ2YWthdHJlIiwiYSI6ImNrZ2dkNHQ5MzB2bDUyc2tmZWc2dGx1eXQifQ.lVdNfajC6maADBHqsVrpcg"
     map_plot = go.Figure(go.Scattermapbox(
         mode="markers+text",
