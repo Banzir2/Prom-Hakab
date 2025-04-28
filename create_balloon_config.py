@@ -4,6 +4,7 @@ import warnings
 
 import numpy as np
 import pandas as pd
+from matplotlib import pyplot as plt
 
 import constants
 import functions
@@ -23,13 +24,23 @@ if __name__ == '__main__':
         pos = np.array(interpolates[i-1])
         while functions.vec_length(diff) > functions.vec_length(step_vec):
             pos += step_vec
-            positions.append(pos)
+            positions.append(pos.__copy__())
             diff -= step_vec
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    x = [p[0] for p in positions]
+    y = [p[1] for p in positions]
+    ax.set_xlabel('X Label')
+    ax.set_ylabel('Y Label')
+    ax.set_aspect('equal')
+    ax.scatter(x, y)
+    #plt.show()
 
     balloon_positions = [np.array(interpolates[0])]
     num_balloons = 0
     i = 0
-    balloon_dist = math.degrees(100000 / constants.earth_radius)
+    balloon_dist = math.degrees(constants.dist_between_balloons / constants.earth_radius)
     while i < len(positions):
         last_balloon = balloon_positions[num_balloons]
         new_position = positions[i]
@@ -39,8 +50,6 @@ if __name__ == '__main__':
         else:
             balloon_positions.append(positions[i-1])
             num_balloons += 1
-
-
 
     with open(f'configurations/balloons{len(balloon_positions)}.csv', 'w', newline='') as configfile:
         wr = csv.writer(configfile, quoting=csv.QUOTE_NONE)
