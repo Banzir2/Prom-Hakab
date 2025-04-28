@@ -11,5 +11,6 @@ min_time_in_range = 5  # Seconds
 
 sim_step = 0.1  # Seconds
 karrar_speed = 900 / 3.6  # Meters/Seconds
+azimuth_rand_range = 15  # Degrees
 
 dist_between_balloons = 80000  # Meters

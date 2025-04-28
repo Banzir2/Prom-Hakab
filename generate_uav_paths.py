@@ -8,7 +8,10 @@ import constants
 import functions
 
 if __name__ == '__main__':
-    points = pd.read_csv('paths/points.csv').values
+    launch_points = pd.read_csv('uav_launch-sites.csv').values
+    target_points = pd.read_csv('uav_targets.csv').values
+    points = []
+
     step_dist = math.degrees((constants.sim_step * constants.karrar_speed) / constants.earth_radius)
     for i in range(int(len(points) / 2)):
         path = []
