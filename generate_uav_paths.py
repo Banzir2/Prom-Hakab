@@ -25,8 +25,11 @@ def generate_random_path(lst: list, start: np.array, end: np.array, step: float,
     diff = new_end - start
     az_vector = (diff / functions.vec_length(diff)) * sim_step
     p = start
+    time = 0
     for j in range(int(math.floor(functions.vec_length(diff) / sim_step))):
         l = list(p)
+        l.append(constants.sim_step * len(lst) + time)
+        time += constants.sim_step
         lst.append(l)
         p = p + az_vector
     if functions.vec_length(end - start) < step:
@@ -51,6 +54,6 @@ if __name__ == '__main__':
 
         with open(f'paths/path{i + 1}.csv', 'w', newline='') as pathfile:
             wr = csv.writer(pathfile, quoting=csv.QUOTE_NONE)
-            wr.writerow(['lat', 'lon'])
+            wr.writerow(['lat', 'lon', 'time'])
             wr.writerows(points)
 
