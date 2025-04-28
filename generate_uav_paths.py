@@ -49,16 +49,6 @@ if __name__ == '__main__':
         generate_random_path(points, missions[i][0], missions[i][1], 0.02,
                              functions.vec_length(target_points[i] - launch_points[i]) * 1.5)
 
-        fig = plt.figure()
-        ax = fig.add_subplot(111)
-        x = [p[0] for p in points]
-        y = [p[1] for p in points]
-        ax.set_xlabel('X Label')
-        ax.set_ylabel('Y Label')
-        ax.set_aspect('equal')
-        ax.scatter(x, y)
-        #plt.show()
-
         with open(f'paths/path{i + 1}.csv', 'w', newline='') as pathfile:
             wr = csv.writer(pathfile, quoting=csv.QUOTE_NONE)
             wr.writerow(['lat', 'lon'])
