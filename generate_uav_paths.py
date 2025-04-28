@@ -21,15 +21,13 @@ def generate_random_path(lst: list, start: np.array, end: np.array, step: float,
         az_vector = (az_vector / functions.vec_length(az_vector)) * step
         new_end = start + az_vector
 
-    sim_step = math.degrees((constants.sim_step * constants.karrar_speed) / constants.earth_radius)
+    dist_step = math.degrees((constants.sim_step * constants.karrar_speed) / constants.earth_radius)
     diff = new_end - start
-    az_vector = (diff / functions.vec_length(diff)) * sim_step
+    az_vector = (diff / functions.vec_length(diff)) * dist_step
     p = start
-    time = 0
-    for j in range(int(math.floor(functions.vec_length(diff) / sim_step))):
+    for j in range(int(math.floor(functions.vec_length(diff) / dist_step))):
         l = list(p)
-        l.append(constants.sim_step * len(lst) + time)
-        time += constants.sim_step
+        l.append(constants.sim_step * (len(lst) + j))
         lst.append(l)
         p = p + az_vector
     if functions.vec_length(end - start) < step:
@@ -50,7 +48,7 @@ if __name__ == '__main__':
     for i in range(len(missions)):
         points = []
         generate_random_path(points, missions[i][0], missions[i][1], 0.03,
-                             functions.vec_length(target_points[i] - launch_points[i]) * 1.5)
+                             functions.vec_length(missions[i][1] - missions[i][0]) * 1.5)
 
         with open(f'paths/path{i + 1}.csv', 'w', newline='') as pathfile:
             wr = csv.writer(pathfile, quoting=csv.QUOTE_NONE)

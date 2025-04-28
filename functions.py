@@ -4,6 +4,7 @@ import numpy as np
 import pyproj as pj
 
 import constants
+import functions
 import mvp_functions
 
 
@@ -21,7 +22,8 @@ def prob_detect(balloons: list[np.array], path: list[tuple[np.array, float]]) ->
     for b in balloons:
         time_in_range = 0
         for i in range(len(path) - 1):
-            if theta(b, path[i][0]):
+            point = path[i][0]
+            if theta(b, functions.gps2ecef(point[1], point[0], 0)):
                 time_in_range += path[i + 1][1] - path[i][1]
             else:
                 if time_in_range > constants.min_time_in_range:

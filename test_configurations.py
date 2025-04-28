@@ -23,6 +23,7 @@ if __name__ == '__main__':
                 df = pd.read_csv(path)
                 data = df.values
 
+                print(f"Simulating path {i + 1}...")
                 points = [tuple([np.array(data[j][0:-1]), data[j][len(data[j]) - 1]]) for j in range(len(data))]
                 prob = 100 * functions.prob_detect(ecef_coords, points)
                 sum_prob += prob

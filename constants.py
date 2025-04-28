@@ -11,7 +11,7 @@ detection_lambda = 0.0333707984492  # 1/Seconds
 detection_radius = 56.5 * 1000  # Meters
 min_time_in_range = 5  # Seconds
 
-sim_step = 0.1  # Seconds
+sim_step = 0.5  # Seconds
 karrar_speed = 900 / 3.6  # Meters/Seconds
 azimuth_rand_range = math.radians(40)  # Radians
 
