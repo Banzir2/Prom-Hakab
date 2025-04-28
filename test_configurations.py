@@ -17,7 +17,7 @@ if __name__ == '__main__':
         for c in gps_coords:
             ecef_coords.append(functions.gps2ecef(c[1], c[0], constants.max_height))
 
-        for i in range(len(os.listdir('paths')) - 1):
+        for i in range(len(os.listdir('paths'))):
             with open(f'paths/path{i + 1}.csv') as path:
                 df = pd.read_csv(path)
                 data = df.values
