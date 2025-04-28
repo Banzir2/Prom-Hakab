@@ -10,7 +10,7 @@ import functions
 
 if __name__ == '__main__':
     warnings.filterwarnings("ignore")
-    df = pd.read_csv("balloon_interpolates.csv")
+    df = pd.read_csv("israel-map.csv")
     interpolates = list(df.values)
     positions = [np.array(interpolates[0])]
     interpolates.append(interpolates[0])
@@ -31,10 +31,16 @@ if __name__ == '__main__':
     i = 0
     balloon_dist = math.degrees(100000 / constants.earth_radius)
     while i < len(positions):
-        if functions.vec_length(positions[i] - balloon_positions[num_balloons]) < balloon_dist:
+        last_balloon = balloon_positions[num_balloons]
+        new_position = positions[i]
+
+        if functions.vec_length(new_position - last_balloon) < balloon_dist:
             i += 1
         else:
             balloon_positions.append(positions[i-1])
+            num_balloons += 1
+
+
 
     with open(f'configurations/balloons{len(balloon_positions)}.csv', 'w', newline='') as configfile:
         wr = csv.writer(configfile, quoting=csv.QUOTE_NONE)
