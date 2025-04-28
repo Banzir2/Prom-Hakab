@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
         sum_prob = 0
         normalizer = 0
-        for i in range(0, len(os.listdir('paths')), 1):
+        for i in range(0, len(os.listdir('paths')), 10):
             with open(f'paths/path{i + 1}.csv') as path:
                 df = pd.read_csv(path)
                 data = df.values
