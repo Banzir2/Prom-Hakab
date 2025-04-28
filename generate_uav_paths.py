@@ -20,7 +20,7 @@ def generate_random_path(lst: list, start: np.array, end: np.array, step: float,
         az_vector = (az_vector / functions.vec_length(az_vector)) * step
         new_end = start + az_vector
 
-    dist_step = math.degrees((constants.sim_step * constants.karrar_speed) / constants.earth_radius)
+    dist_step = math.degrees((constants.sim_step * constants.uav_speed) / constants.earth_radius)
     diff = new_end - start
     az_vector = (diff / functions.vec_length(diff)) * dist_step
     p = start
