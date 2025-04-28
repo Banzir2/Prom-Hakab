@@ -1,3 +1,5 @@
+import math
+
 min_height = 15000  # Meters
 max_height = 20000  # Meters
 small_range = 60000  # Meters
@@ -11,5 +13,6 @@ min_time_in_range = 5  # Seconds
 
 sim_step = 0.1  # Seconds
 karrar_speed = 900 / 3.6  # Meters/Seconds
+azimuth_rand_range = math.radians(40)  # Radians
 
 dist_between_balloons = 80000  # Meters
