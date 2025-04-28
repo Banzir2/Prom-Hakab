@@ -46,7 +46,7 @@ if __name__ == '__main__':
 
     for i in range(len(missions)):
         points = []
-        generate_random_path(points, missions[i][0], missions[i][1], 0.02,
+        generate_random_path(points, missions[i][0], missions[i][1], 0.03,
                              functions.vec_length(target_points[i] - launch_points[i]) * 1.5)
 
         with open(f'paths/path{i + 1}.csv', 'w', newline='') as pathfile:
