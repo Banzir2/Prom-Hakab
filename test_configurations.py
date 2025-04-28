@@ -18,7 +18,8 @@ if __name__ == '__main__':
             ecef_coords.append(functions.gps2ecef(c[1], c[0], constants.max_height))
 
         sum_prob = 0
-        for i in range(len(os.listdir('paths'))):
+        normalizer = 0
+        for i in range(0, len(os.listdir('paths')), 1):
             with open(f'paths/path{i + 1}.csv') as path:
                 df = pd.read_csv(path)
                 data = df.values
@@ -26,10 +27,17 @@ if __name__ == '__main__':
                 print(f"Simulating path {i + 1}...")
                 points = [tuple([np.array(data[j][0:-1]), data[j][len(data[j]) - 1]]) for j in range(len(data))]
                 prob = 100 * functions.prob_detect(ecef_coords, points)
-                sum_prob += prob
-                print("Balloon array detected UAV, probability: ", prob, '\n')
 
-        print("Expected configuration detection probability: ", sum_prob / len(os.listdir('paths')))
+                start = data[0][0:-1]
+                end = data[-1][0:-1]
+                p1 = functions.gps2ecef(start[1], start[0], 0)
+                p2 = functions.gps2ecef(end[1], end[0], 0)
+                dist = functions.vec_length(p2 - p1)
+                sum_prob += prob / dist
+                print("Balloon array detected UAV, probability: ", prob, '\n')
+                normalizer += 1 / dist
+
+        print("Expected configuration detection probability: ", sum_prob / normalizer)
 
         df = pd.read_csv("configurations/" + config)
         token = "pk.eyJ1IjoiYXRoYXJ2YWthdHJlIiwiYSI6ImNrZ2dkNHQ5MzB2bDUyc2tmZWc2dGx1eXQifQ.lVdNfajC6maADBHqsVrpcg"

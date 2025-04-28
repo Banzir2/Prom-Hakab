@@ -25,9 +25,10 @@ def generate_random_path(lst: list, start: np.array, end: np.array, step: float,
     diff = new_end - start
     az_vector = (diff / functions.vec_length(diff)) * dist_step
     p = start
+    list_length = len(lst)
     for j in range(int(math.floor(functions.vec_length(diff) / dist_step))):
         l = list(p)
-        l.append(constants.sim_step * (len(lst) + j))
+        l.append(constants.sim_step * (list_length + j))
         lst.append(l)
         p = p + az_vector
     if functions.vec_length(end - start) < step:
