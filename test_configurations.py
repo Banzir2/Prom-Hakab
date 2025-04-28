@@ -17,14 +17,18 @@ if __name__ == '__main__':
         for c in gps_coords:
             ecef_coords.append(functions.gps2ecef(c[1], c[0], constants.max_height))
 
+        sum_prob = 0
         for i in range(len(os.listdir('paths'))):
             with open(f'paths/path{i + 1}.csv') as path:
                 df = pd.read_csv(path)
                 data = df.values
 
                 points = [tuple([np.array(data[j][0:-1]), data[j][len(data[j]) - 1]]) for j in range(len(data))]
-                print("Balloon array detected UAV, probability: ",
-                      100 * functions.prob_detect(ecef_coords, points), '\n')
+                prob = 100 * functions.prob_detect(ecef_coords, points)
+                sum_prob += prob
+                print("Balloon array detected UAV, probability: ", prob, '\n')
+
+        print("Expected configuration detection probability: ", sum_prob / len(os.listdir('paths')))
 
         df = pd.read_csv("configurations/" + config)
         token = "pk.eyJ1IjoiYXRoYXJ2YWthdHJlIiwiYSI6ImNrZ2dkNHQ5MzB2bDUyc2tmZWc2dGx1eXQifQ.lVdNfajC6maADBHqsVrpcg"
