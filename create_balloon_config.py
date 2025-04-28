@@ -18,10 +18,10 @@ if __name__ == '__main__':
     for i in range(len(interpolates)):
         if i == 0:
             continue
-        diff = np.array(interpolates[i]) - np.array(interpolates[i-1])
+        diff = np.array(interpolates[i]) - np.array(interpolates[i - 1])
         step = math.degrees(500 / constants.earth_radius)
         step_vec = (diff / functions.vec_length(diff)) * step
-        pos = np.array(interpolates[i-1])
+        pos = np.array(interpolates[i - 1])
         while functions.vec_length(diff) > functions.vec_length(step_vec):
             pos += step_vec
             positions.append(pos.__copy__())
@@ -35,7 +35,7 @@ if __name__ == '__main__':
     ax.set_ylabel('Y Label')
     ax.set_aspect('equal')
     ax.scatter(x, y)
-    #plt.show()
+    # plt.show()
 
     balloon_positions = [np.array(interpolates[0])]
     num_balloons = 0
@@ -48,7 +48,7 @@ if __name__ == '__main__':
         if functions.vec_length(new_position - last_balloon) < balloon_dist:
             i += 1
         else:
-            balloon_positions.append(positions[i-1])
+            balloon_positions.append(positions[i - 1])
             num_balloons += 1
 
     with open(f'configurations/balloons{len(balloon_positions)}.csv', 'w', newline='') as configfile:

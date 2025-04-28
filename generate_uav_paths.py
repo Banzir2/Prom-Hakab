@@ -4,7 +4,6 @@ import random
 
 import numpy as np
 import pandas as pd
-from matplotlib import pyplot as plt
 
 import constants
 import functions
@@ -55,4 +54,3 @@ if __name__ == '__main__':
             wr = csv.writer(pathfile, quoting=csv.QUOTE_NONE)
             wr.writerow(['lat', 'lon', 'time'])
             wr.writerows(points)
-
