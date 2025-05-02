@@ -44,6 +44,13 @@ def gps2ecef(lon, lat, alt) -> np.array:
     return np.array([x, y, z])
 
 
+def gps2utm(lon, lat, alt) -> np.array:
+    utm = pj.Proj(proj='utm', zone=36, ellps='WGS84', datum='WGS84')
+    lla = pj.Proj(proj='latlong', ellps='WGS84', datum='WGS84')
+    x, y, z = pj.transform(lla, utm, lon, lat, alt, radians=False)
+    return np.array([x, y])
+
+
 def ecef2gps(r: list[float]) -> list[float]:
     ecef = pj.Proj(proj='geocent', ellps='WGS84', datum='WGS84')
     lla = pj.Proj(proj='latlong', ellps='WGS84', datum='WGS84')
@@ -53,3 +60,7 @@ def ecef2gps(r: list[float]) -> list[float]:
 
 def vec_length(vec: np.array) -> float:
     return math.sqrt(sum([x ** 2 for x in vec]))
+
+
+def cross(a: np.array, b: np.array) -> np.array:
+    return np.array([a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]])
