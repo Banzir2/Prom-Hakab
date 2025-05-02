@@ -10,7 +10,12 @@ function [out] = score_config(balloons, points)
         binary_dists(dist < 56500) = 1;
         total = total + binary_dists;
     end
-    scatter(balloons(:,1), balloons(:,2));
-    out = -sum(sum(sqrt(sqrt(total))));
+    [bx, by] = meshgrid(balloons(:,1), balloons(:,2));
+    distx = bx - bx.';
+    disty = by - by.';
+    R = sqrt(distx.^2 + disty.^2);
+    R = R(R > 0);
+    min_dist = min(R);
+    out = -sum(sum(sqrt(sqrt(total)))) * log(min_dist);
 end
 
