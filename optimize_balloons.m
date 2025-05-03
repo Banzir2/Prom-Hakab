@@ -69,4 +69,4 @@ scatter(out(:, 1), out(:, 2));
 scatter(borders(:, 1), borders(:, 2));
 score_config(out, points)
 
-writematrix(outgps, "configurations/balloons" + size(out, 1) + ".csv");
+writematrix(out, "configurations/balloons" + size(out, 1) + ".csv");
