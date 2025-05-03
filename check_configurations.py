@@ -38,31 +38,30 @@ if __name__ == '__main__':
                 normalizer += 1 / dist
 
         print("Expected configuration detection probability: ", sum_prob / normalizer)
-        if config == 'balloons9.csv':
-            df = pd.read_csv("configurations/" + config)
-            token = "pk.eyJ1IjoiYXRoYXJ2YWthdHJlIiwiYSI6ImNrZ2dkNHQ5MzB2bDUyc2tmZWc2dGx1eXQifQ.lVdNfajC6maADBHqsVrpcg"
-            map_plot = go.Figure(go.Scattermapbox(
-                mode="markers+text",
-                lon=df['lon'], lat=df['lat'],
-                marker={'size': 10, 'symbol': "airport", 'allowoverlap': False, },
-                hoverinfo='none'
-            ))
-            map_plot.add_trace(go.Scattermapbox(
-                mode="markers",
-                lon=df['lon'], lat=df['lat'],
-                marker={'size': 150, 'sizemode': 'area',
-                        'symbol': "circle", 'opacity': 0.3,
-                        'allowoverlap': True, },
-                hoverinfo='skip'))
-            map_plot.update_layout(
-                mapbox={
-                    'accesstoken': token,
-                    'style': "streets",
-                    'bearing': 0,
-                    'pitch': 0,
-                    'center': {'lat': 31.55, 'lon': 35},
-                    'zoom': 6.5
-                },
-                showlegend=False)
-            map_plot.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
-            map_plot.show()
+        df = pd.read_csv("configurations/" + config)
+        token = "pk.eyJ1IjoiYXRoYXJ2YWthdHJlIiwiYSI6ImNrZ2dkNHQ5MzB2bDUyc2tmZWc2dGx1eXQifQ.lVdNfajC6maADBHqsVrpcg"
+        map_plot = go.Figure(go.Scattermapbox(
+            mode="markers+text",
+            lon=df['lon'], lat=df['lat'],
+            marker={'size': 10, 'symbol': "airport", 'allowoverlap': False, },
+            hoverinfo='none'
+        ))
+        map_plot.add_trace(go.Scattermapbox(
+            mode="markers",
+            lon=df['lon'], lat=df['lat'],
+            marker={'size': 150, 'sizemode': 'area',
+                    'symbol': "circle", 'opacity': 0.3,
+                    'allowoverlap': True, },
+            hoverinfo='skip'))
+        map_plot.update_layout(
+            mapbox={
+                'accesstoken': token,
+                'style': "streets",
+                'bearing': 0,
+                'pitch': 0,
+                'center': {'lat': 31.55, 'lon': 35},
+                'zoom': 6.5
+            },
+            showlegend=False)
+        map_plot.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+        map_plot.show()
