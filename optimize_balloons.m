@@ -15,7 +15,7 @@ thicc_border = zeros(size(X));
 inpolygonmatrix = inpolygon(X, Y, borders(:,1), borders(:,2));
 for b=borders.'
     R = sqrt((X - b(1)).^2 + (Y - b(2)).^2);
-    thicc_border(R < 20000 & (inpolygonmatrix == 1)) = 1;
+    thicc_border(R < 40000 & (inpolygonmatrix == 1)) = 1;
     thicc_border(R < 40000 & (~(inpolygonmatrix == 1))) = 1;
 end
 
@@ -27,7 +27,7 @@ points(:,2) = Y(idx);
 
 balloons = [[642106.7687921221, 3498466.1847251933];
      %[671012.5189409455, 3570217.4580244776];
-     [692696.6167061602, 3645350.4665942537];
+     %[692696.6167061602, 3645350.4665942537];
      [748868.3735791973, 3688186.9144293247];
      [740496.8721962199, 3609535.74057031];
      [737615.7261567067, 3530423.099617622];
@@ -68,3 +68,5 @@ end
 scatter(out(:, 1), out(:, 2));
 scatter(borders(:, 1), borders(:, 2));
 score_config(out, points)
+
+writematrix(outgps, "configurations/balloons" + size(out, 1) + ".csv");
