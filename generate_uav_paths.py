@@ -1,6 +1,7 @@
 import csv
 import math
 import random
+import os
 
 import numpy as np
 import pandas as pd
@@ -94,20 +95,12 @@ def generate_paths(launch_sites_csv: str, targets_csv: str, data_loc: str):
             wr.writerows(points)
 
 if __name__ == '__main__':
-    launch_points = pd.read_csv('uav_launch-sites.csv').values
-    target_points = pd.read_csv('uav_targets.csv').values
+    arenas_names = []
+    for arena in os.listdir("launch_sites"):
+        arenas_names.append(arena[:-4])
 
-    missions = []
-    for l in launch_points:
-        for t in target_points:
-            missions.append([l, t])
-
-    for i in range(len(missions)):
-        points = []
-        generate_random_uav_path(points, missions[i][0], missions[i][1], 0, 0.03,
-                             functions.vec_length(missions[i][1] - missions[i][0]) * 1.5)
-
-        with open(f'paths/path{i + 1}.csv', 'w', newline='') as pathfile:
-            wr = csv.writer(pathfile)
-            wr.writerow(['lat', 'lon', 'time'])
-            wr.writerows(points)
+    for arena in arenas_names:
+        launch_sites_csv = "launch_sites/" + arena + ".csv"
+        targets_csv = "targets/" + arena + ".csv"
+        data_loc = "paths/" + arena
+        generate_paths(launch_sites_csv, targets_csv, data_loc)
