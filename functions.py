@@ -48,7 +48,7 @@ def get_time_in_range(balloon: np.array, path: list[tuple[np.array, float]]) -> 
     for i in range(len(path) - 1):
         path_in_range_len = find_len_in_sphere(path[i][0], path[i + 1][0], balloon, constants.small_range)
         total_len = vec_length(path[i][0] - path[i + 1][0])
-        added_time = (path_in_range_len / total_len) * (path[i][1] - path[i + 1][1])
+        added_time = (path_in_range_len / total_len) * (path[i + 1][1] - path[i][1])
         total_time += added_time
 
     return total_time
