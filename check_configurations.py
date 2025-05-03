@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
                 print(f"Simulating path {i + 1}...")
                 points = [tuple([np.array(data[j][0:-1]), data[j][len(data[j]) - 1]]) for j in range(len(data))]
-                prob = 100 * functions.prob_detect(ecef_coords, points)
+                prob = 100 * functions.improved_prob_detect(ecef_coords, points)
 
                 start = data[0][0:-1]
                 end = data[-1][0:-1]
