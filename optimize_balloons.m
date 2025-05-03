@@ -69,6 +69,7 @@ scatter(out(:, 1), out(:, 2));
 scatter(borders(:, 1), borders(:, 2));
 score_config(out, points)
 
+out = utm2ll(out(:,1), out(:,2), 36, 'wgs84');
 T = array2table(out);
-T.Properties.VariableNames(1:2) = {'x', 'y'};
+T.Properties.VariableNames(1:2) = {'lat', 'lon'};
 writetable(T, "configurations/balloons" + size(out, 1) + ".csv");
