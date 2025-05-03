@@ -19,27 +19,41 @@ if __name__ == '__main__':
         for c in gps_coords:
             ecef_coords.append(functions.gps2ecef(c[1], c[0], constants.max_height))
 
-        sum_prob = 0
-        normalizer = 0
-        for i in range(0, len(os.listdir('paths')), 1):
-            with open(f'paths/path{i + 1}.csv') as path:
-                df = pd.read_csv(path)
-                data = df.values
+        total_importance = 0
+        sum_importance = 0
+        for dir in os.listdir('paths'):
+            full_path = os.path.join('paths', dir)
+            importance = 0
+            with open(os.path.join(full_path, 'importance.txt'), 'r') as f:
+                importance = int(f.read())
 
-                print(f"Simulating path {i + 1}...")
-                points = [tuple([np.array(data[j][0:-1]), data[j][len(data[j]) - 1]]) for j in range(len(data))]
-                prob = 100 * functions.improved_prob_detect(ecef_coords, points)
+            sum_prob = 0
+            normalizer = 0
+            for i in range(len(os.listdir(full_path)) - 1):
+                with open(f'{full_path}/path{i + 1}.csv') as path:
+                    df = pd.read_csv(path)
+                    data = df.values
 
-                start = data[0][0:-1]
-                end = data[-1][0:-1]
-                p1 = functions.gps2ecef(start[1], start[0], 0)
-                p2 = functions.gps2ecef(end[1], end[0], 0)
-                dist = functions.vec_length(p2 - p1)
-                sum_prob += prob / dist
-                print("Balloon array detected UAV, probability: ", prob, '\n')
-                normalizer += 1 / dist
+                    print(f"Simulating path {i + 1}...")
+                    points = [tuple([np.array(data[j][0:-1]), data[j][len(data[j]) - 1]]) for j in range(len(data))]
+                    prob = 100 * functions.improved_prob_detect(ecef_coords, points)
 
-        print("Expected configuration detection probability: ", sum_prob / normalizer)
+                    start = data[0][0:-1]
+                    end = data[-1][0:-1]
+                    p1 = functions.gps2ecef(start[1], start[0], 0)
+                    p2 = functions.gps2ecef(end[1], end[0], 0)
+                    dist = functions.vec_length(p2 - p1)
+                    sum_prob += prob / dist
+                    print("Balloon array detected UAV, probability: ", prob, '\n')
+                    normalizer += 1 / dist
+
+            arena_total_prob = sum_prob / normalizer
+            total_importance += importance
+            sum_importance += importance * arena_total_prob
+            print(f"Expected configuration detection probability from {dir}: ", sum_prob / normalizer)
+
+        total_prob = sum_importance / total_importance
+        print(f"Total expected configuration detection probability: ", total_prob)
 
         # df = pd.read_csv("configurations/" + config)
         # token = "pk.eyJ1IjoiYXRoYXJ2YWthdHJlIiwiYSI6ImNrZ2dkNHQ5MzB2bDUyc2tmZWc2dGx1eXQifQ.lVdNfajC6maADBHqsVrpcg"
