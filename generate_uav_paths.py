@@ -9,6 +9,16 @@ import constants
 import functions
 
 def generate_random_uav_path(lst: list, start: np.array, end: np.array, cur_time:float, step: float, dist: float):
+    """
+    The function gets a starting point and an end and returns a path
+    :param lst: a list in which the path is written to
+    :param start: starting point
+    :param end: ending point
+    :param cur_time: the time of the starting point
+    :param step: the length of one step
+    :param dist: the total distance of the path
+    :return: None
+    """
     if functions.vec_length(end - start) < step:
         new_end = end
     else:
@@ -57,6 +67,31 @@ def generate_random_path(lst: list, start: np.array, end: np.array, step: float,
     else:
         generate_random_path(lst, new_end, end, step, dist - step)
 
+def generate_paths(launch_sites_csv: str, targets_csv: str, data_loc: str):
+    """
+    The function gets csv files for launch sites and targets and generates paths
+    :param launch_sites_csv: the name of the launch sites csv file
+    :param targets_csv: the name of the targets csv file
+    :param data_loc: the location of the result
+    :return: None
+    """
+    launch_points = pd.read_csv(launch_sites_csv).values
+    target_points = pd.read_csv(targets_csv).values
+
+    missions = []
+    for l in launch_points:
+        for t in target_points:
+            missions.append([l, t])
+
+    for i in range(len(missions)):
+        points = []
+        generate_random_uav_path(points, missions[i][0], missions[i][1], 0, 0.03,
+                                 functions.vec_length(missions[i][1] - missions[i][0]) * 1.5)
+
+        with open(f'{data_loc}/path{i + 1}.csv', 'w', newline='') as pathfile:
+            wr = csv.writer(pathfile)
+            wr.writerow(['lat', 'lon', 'time'])
+            wr.writerows(points)
 
 if __name__ == '__main__':
     launch_points = pd.read_csv('uav_launch-sites.csv').values
