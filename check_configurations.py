@@ -13,8 +13,6 @@ if __name__ == '__main__':
     for config in os.listdir("configurations"):
         df = pd.read_csv("configurations/" + config)
         gps_coords = df.values
-        if df.columns[0] == 'x':
-            gps_coords = [functions.utm2gps(g[0], g[1], constants.max_height) for g in gps_coords]
         ecef_coords = []
         for c in gps_coords:
             ecef_coords.append(functions.gps2ecef(c[1], c[0], constants.max_height))
@@ -56,34 +54,6 @@ if __name__ == '__main__':
         total_prob = sum_importance / total_importance
         print(f"Total expected configuration detection probability: ", total_prob)
 
-        # df = pd.read_csv("configurations/" + config)
-        # token = "pk.eyJ1IjoiYXRoYXJ2YWthdHJlIiwiYSI6ImNrZ2dkNHQ5MzB2bDUyc2tmZWc2dGx1eXQifQ.lVdNfajC6maADBHqsVrpcg"
-        # map_plot = go.Figure(go.Scattermapbox(
-        #     mode="markers+text",
-        #     lon=df['lon'], lat=df['lat'],
-        #     marker={'size': 10, 'symbol': "airport", 'allowoverlap': False, },
-        #     hoverinfo='none'
-        # ))
-        # map_plot.add_trace(go.Scattermapbox(
-        #     mode="markers",
-        #     lon=df['lon'], lat=df['lat'],
-        #     marker={'size': 150, 'sizemode': 'area',
-        #             'symbol': "circle", 'opacity': 0.3,
-        #             'allowoverlap': True, },
-        #     hoverinfo='skip'))
-        # map_plot.update_layout(
-        #     mapbox={
-        #         'accesstoken': token,
-        #         'style': "streets",
-        #         'bearing': 0,
-        #         'pitch': 0,
-        #         'center': {'lat': 31.55, 'lon': 35},
-        #         'zoom': 6.5
-        #     },
-        #     showlegend=False)
-        # map_plot.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
-        # map_plot.show()
-=======
         print("Expected configuration detection probability: ", sum_prob / normalizer)
         df = pd.read_csv("configurations/" + config)
         token = "pk.eyJ1IjoiYXRoYXJ2YWthdHJlIiwiYSI6ImNrZ2dkNHQ5MzB2bDUyc2tmZWc2dGx1eXQifQ.lVdNfajC6maADBHqsVrpcg"
@@ -112,4 +82,4 @@ if __name__ == '__main__':
             showlegend=False)
         map_plot.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
         map_plot.show()
->>>>>>> origin/main
+
