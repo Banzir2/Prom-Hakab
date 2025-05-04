@@ -16,14 +16,8 @@ if __name__ == '__main__':
         ecef_coords = []
         for c in gps_coords:
             ecef_coords.append(functions.gps2ecef(c[1], c[0], constants.max_height))
-
-        total_importance = 0
-        sum_importance = 0
         for dir in os.listdir('paths'):
             full_path = os.path.join('paths', dir)
-            importance = 0
-            with open(os.path.join(full_path, 'importance.txt'), 'r') as f:
-                importance = int(f.read())
 
             sum_prob = 0
             normalizer = 0
@@ -46,14 +40,8 @@ if __name__ == '__main__':
                     normalizer += 1 / dist
 
             arena_total_prob = sum_prob / normalizer
-            total_importance += importance
-            sum_importance += importance * arena_total_prob
             print(f"Expected configuration detection probability from {dir}: ", sum_prob / normalizer)
 
-        total_prob = sum_importance / total_importance
-        print(f"Total expected configuration detection probability: ", total_prob)
-
-        print("Expected configuration detection probability: ", sum_prob / normalizer)
         df = pd.read_csv("configurations/" + config)
         token = "pk.eyJ1IjoiYXRoYXJ2YWthdHJlIiwiYSI6ImNrZ2dkNHQ5MzB2bDUyc2tmZWc2dGx1eXQifQ.lVdNfajC6maADBHqsVrpcg"
         map_plot = go.Figure(go.Scattermapbox(
