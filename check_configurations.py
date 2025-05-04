@@ -12,6 +12,7 @@ if __name__ == '__main__':
     warnings.filterwarnings("ignore")
     for config in os.listdir("configurations"):
         df = pd.read_csv("configurations/" + config)
+        print(f"\nTesting configuration - {config.strip('balons.cv')} balloons")
         gps_coords = df.values
         ecef_coords = []
         for c in gps_coords:
