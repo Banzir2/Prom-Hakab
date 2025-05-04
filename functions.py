@@ -129,8 +129,8 @@ def gps2utm(lon, lat, alt) -> np.array:
 def utm2gps(x, y, alt) -> np.array:
     utm = pj.Proj(proj='utm', zone=36, ellps='WGS84', datum='WGS84')
     lla = pj.Proj(proj='latlong', ellps='WGS84', datum='WGS84')
-    lon, lat, alt = pj.transform(utm, lla, x, y, alt, radians=False)
-    return np.array([lon, lat, alt])
+    lat, lon, alt = pj.transform(utm, lla, x, y, alt, radians=False)
+    return np.array([lat, lon, alt])
 
 
 def ecef2gps(r: list[float]) -> list[float]:
