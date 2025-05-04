@@ -1,7 +1,7 @@
 import csv
 import math
-import random
 import os
+import random
 
 import numpy as np
 import pandas as pd
@@ -9,7 +9,8 @@ import pandas as pd
 import constants
 import functions
 
-def generate_random_uav_path(lst: list, start: np.array, end: np.array, cur_time:float, step: float, dist: float):
+
+def generate_random_uav_path(lst: list, start: np.array, end: np.array, cur_time: float, step: float, dist: float):
     """
     The function gets a starting point and an end and returns a path
     :param lst: a list in which the path is written to
@@ -42,6 +43,7 @@ def generate_random_uav_path(lst: list, start: np.array, end: np.array, cur_time
     else:
         generate_random_uav_path(lst, new_end, end, cur_time + lap_time, step, dist - step)
 
+
 def generate_random_path(lst: list, start: np.array, end: np.array, step: float, dist: float):
     if functions.vec_length(end - start) < step:
         new_end = end
@@ -68,6 +70,7 @@ def generate_random_path(lst: list, start: np.array, end: np.array, step: float,
     else:
         generate_random_path(lst, new_end, end, step, dist - step)
 
+
 def generate_paths(launch_sites_csv: str, targets_csv: str, data_loc: str):
     """
     The function gets csv files for launch sites and targets and generates paths
@@ -93,6 +96,7 @@ def generate_paths(launch_sites_csv: str, targets_csv: str, data_loc: str):
             wr = csv.writer(pathfile)
             wr.writerow(['lat', 'lon', 'time'])
             wr.writerows(points)
+
 
 if __name__ == '__main__':
     arenas_names = []

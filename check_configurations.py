@@ -69,4 +69,3 @@ if __name__ == '__main__':
             showlegend=False)
         map_plot.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
         map_plot.show()
-

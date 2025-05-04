@@ -15,6 +15,7 @@ def theta(r_balloon: np.array, r_object: np.array) -> bool:
         return True
     return False
 
+
 def improved_prob_detect(balloons: list[np.array], path: list[tuple[np.array, float]]) -> float:
     """
     The function gets a path and a list of balloons and returns the probability that the object will be detected
@@ -37,6 +38,7 @@ def improved_prob_detect(balloons: list[np.array], path: list[tuple[np.array, fl
         # print("UAV in range, detection probability:", 100 * mvp_functions.detection_probability_cu(t))
     return 1 - prob_no_detect
 
+
 def get_time_in_range(balloon: np.array, path: list[tuple[np.array, float]]) -> float:
     """
     Gets a balloon and a path and returns the time in the balloon's range
@@ -52,6 +54,7 @@ def get_time_in_range(balloon: np.array, path: list[tuple[np.array, float]]) -> 
         total_time += added_time
 
     return total_time
+
 
 def find_len_in_sphere(startPoint: np.array, endPoint: np.array, center: np.array, radius: float) -> float:
     """
@@ -90,6 +93,7 @@ def find_len_in_sphere(startPoint: np.array, endPoint: np.array, center: np.arra
     point2 = startPoint + t_end * d
 
     return np.linalg.norm(point2 - point1)
+
 
 def prob_detect(balloons: list[np.array], path: list[tuple[np.array, float]]) -> float:
     prob_no_detect = 1
