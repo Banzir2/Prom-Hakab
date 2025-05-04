@@ -36,7 +36,6 @@ if __name__ == '__main__':
                     points = [tuple([np.array(data[j][0:-1]), data[j][len(data[j]) - 1]]) for j in range(len(data))]
                     prob = 100 * functions.improved_prob_detect(ecef_coords, points)
 
-<<<<<<< HEAD
                     start = data[0][0:-1]
                     end = data[-1][0:-1]
                     p1 = functions.gps2ecef(start[1], start[0], 0)
