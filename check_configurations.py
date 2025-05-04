@@ -26,7 +26,7 @@ if __name__ == '__main__':
                     df = pd.read_csv(path)
                     data = df.values
 
-                    print(f"Simulating path {i + 1}...")
+                    # print(f"Simulating path {i + 1}...")
                     points = [tuple([np.array(data[j][0:-1]), data[j][len(data[j]) - 1]]) for j in range(len(data))]
                     prob = 100 * functions.improved_prob_detect(ecef_coords, points)
 
@@ -36,7 +36,7 @@ if __name__ == '__main__':
                     p2 = functions.gps2ecef(end[1], end[0], 0)
                     dist = functions.vec_length(p2 - p1)
                     sum_prob += prob / dist
-                    print("Balloon array detected UAV, probability: ", prob, '\n')
+                    # print("Balloon array detected UAV, probability: ", prob, '\n')
                     normalizer += 1 / dist
 
             arena_total_prob = sum_prob / normalizer
