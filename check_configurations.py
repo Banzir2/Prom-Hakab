@@ -10,9 +10,10 @@ import functions
 
 if __name__ == '__main__':
     warnings.filterwarnings("ignore")
-    for config in os.listdir("configurations"):
-        df = pd.read_csv("configurations/" + config)
-        print(f"\nTesting configuration - {config.strip('balons.cv')} balloons")
+    radiuses = pd.read_csv("configurations/radiuses").values
+    for config in radiuses:
+        df = pd.read_csv("configurations/balloons" + str(config[0]) + ".csv")
+        print(f"\nTesting configuration - {config[0]} balloons")
         gps_coords = df.values
         ecef_coords = []
         for c in gps_coords:
@@ -29,7 +30,7 @@ if __name__ == '__main__':
 
                     # print(f"Simulating path {i + 1}...")
                     points = [tuple([np.array(data[j][0:-1]), data[j][len(data[j]) - 1]]) for j in range(len(data))]
-                    prob = 100 * functions.improved_prob_detect(ecef_coords, points)
+                    prob = 100 * functions.improved_prob_detect(ecef_coords, points, config[1])
 
                     start = data[0][0:-1]
                     end = data[-1][0:-1]
@@ -43,30 +44,30 @@ if __name__ == '__main__':
             arena_total_prob = sum_prob / normalizer
             print(f"Expected configuration detection probability from {dir}: ", sum_prob / normalizer)
 
-        df = pd.read_csv("configurations/" + config)
-        token = "pk.eyJ1IjoiYXRoYXJ2YWthdHJlIiwiYSI6ImNrZ2dkNHQ5MzB2bDUyc2tmZWc2dGx1eXQifQ.lVdNfajC6maADBHqsVrpcg"
-        map_plot = go.Figure(go.Scattermapbox(
-            mode="markers+text",
-            lon=df['lon'], lat=df['lat'],
-            marker={'size': 10, 'symbol': "airport", 'allowoverlap': False, },
-            hoverinfo='none'
-        ))
-        map_plot.add_trace(go.Scattermapbox(
-            mode="markers",
-            lon=df['lon'], lat=df['lat'],
-            marker={'size': 150, 'sizemode': 'area',
-                    'symbol': "circle", 'opacity': 0.3,
-                    'allowoverlap': True, },
-            hoverinfo='skip'))
-        map_plot.update_layout(
-            mapbox={
-                'accesstoken': token,
-                'style': "streets",
-                'bearing': 0,
-                'pitch': 0,
-                'center': {'lat': 31.55, 'lon': 35},
-                'zoom': 6.5
-            },
-            showlegend=False)
-        map_plot.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
-        map_plot.show()
+        # df = pd.read_csv("configurations/balloons" + str(config[0]) + ".csv")
+        # token = "pk.eyJ1IjoiYXRoYXJ2YWthdHJlIiwiYSI6ImNrZ2dkNHQ5MzB2bDUyc2tmZWc2dGx1eXQifQ.lVdNfajC6maADBHqsVrpcg"
+        # map_plot = go.Figure(go.Scattermapbox(
+        #     mode="markers+text",
+        #     lon=df['lon'], lat=df['lat'],
+        #     marker={'size': 10, 'symbol': "airport", 'allowoverlap': False, },
+        #     hoverinfo='none'
+        # ))
+        # map_plot.add_trace(go.Scattermapbox(
+        #     mode="markers",
+        #     lon=df['lon'], lat=df['lat'],
+        #     marker={'size': 150, 'sizemode': 'area',
+        #             'symbol': "circle", 'opacity': 0.3,
+        #             'allowoverlap': True, },
+        #     hoverinfo='skip'))
+        # map_plot.update_layout(
+        #     mapbox={
+        #         'accesstoken': token,
+        #         'style': "streets",
+        #         'bearing': 0,
+        #         'pitch': 0,
+        #         'center': {'lat': 31.55, 'lon': 35},
+        #         'zoom': 6.5
+        #     },
+        #     showlegend=False)
+        # map_plot.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+        # map_plot.show()

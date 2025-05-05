@@ -16,7 +16,7 @@ def theta(r_balloon: np.array, r_object: np.array) -> bool:
     return False
 
 
-def improved_prob_detect(balloons: list[np.array], path: list[tuple[np.array, float]]) -> float:
+def improved_prob_detect(balloons: list[np.array], path: list[tuple[np.array, float]], radius: float) -> float:
     """
     The function gets a path and a list of balloons and returns the probability that the object will be detected
     :param balloons: list of balloons
@@ -28,7 +28,7 @@ def improved_prob_detect(balloons: list[np.array], path: list[tuple[np.array, fl
     times = []
 
     for b in balloons:
-        time_in_range = get_time_in_range(b, fixed_path_coordinates)
+        time_in_range = get_time_in_range(b, fixed_path_coordinates, radius)
 
         if time_in_range > constants.min_time_in_range:
             times.append(time_in_range)
@@ -39,16 +39,17 @@ def improved_prob_detect(balloons: list[np.array], path: list[tuple[np.array, fl
     return 1 - prob_no_detect
 
 
-def get_time_in_range(balloon: np.array, path: list[tuple[np.array, float]]) -> float:
+def get_time_in_range(balloon: np.array, path: list[tuple[np.array, float]], radius: float) -> float:
     """
     Gets a balloon and a path and returns the time in the balloon's range
+    :param radius:
     :param balloon: coordinates of the balloon
     :param path: list of all the checkpoints in the path and times
     :return: time in the balloon's range
     """
     total_time = 0
     for i in range(len(path) - 1):
-        path_in_range_len = find_len_in_sphere(path[i][0], path[i + 1][0], balloon, constants.small_range)
+        path_in_range_len = find_len_in_sphere(path[i][0], path[i + 1][0], balloon, radius)
         total_len = vec_length(path[i][0] - path[i + 1][0])
         added_time = (path_in_range_len / total_len) * (path[i + 1][1] - path[i][1])
         total_time += added_time
