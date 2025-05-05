@@ -1,5 +1,6 @@
 close all; clear;
 
+radius = 56500;
 borders = readmatrix('borders.csv');
 
 maxX = 823181.7714890691;

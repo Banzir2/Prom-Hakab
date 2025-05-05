@@ -1,3 +1,5 @@
+close all;
+
 balloons = [[642106.7687921221, 3498466.1847251933];
      [671012.5189409455, 3570217.4580244776];
      %[678575.14592777, 3445230.86053654];
@@ -23,7 +25,6 @@ scatter(points(:,1), points(:,2));
 
 out = reshape(out, size(balloons)) * 1e6;
 
-radius = 56500;          % Adjust radius as needed
 theta = linspace(0, 2*pi, 100);  % Circle resolution
 
 % Plot each point and its surrounding circle
