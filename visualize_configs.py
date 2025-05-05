@@ -10,7 +10,10 @@ import functions
 if __name__ == '__main__':
     warnings.filterwarnings("ignore")
     for config in os.listdir("configurations"):
+        if config == 'radiuses':
+            continue
         df = pd.read_csv("configurations/" + config)
+        num = int(config.strip("balons.cv"))
 
         gps_coords = df.values
         ecef_coords = []
@@ -24,10 +27,13 @@ if __name__ == '__main__':
             marker={'size': 10, 'symbol': "airport", 'allowoverlap': False, },
             hoverinfo='none'
         ))
+        radius = 150
+        if num > 12:
+            radius = 110
         map_plot.add_trace(go.Scattermapbox(
             mode="markers",
             lon=df['lon'], lat=df['lat'],
-            marker={'size': 150, 'sizemode': 'area',
+            marker={'size': radius, 'sizemode': 'area',
                     'symbol': "circle", 'opacity': 0.3,
                     'allowoverlap': True, },
             hoverinfo='skip'))
